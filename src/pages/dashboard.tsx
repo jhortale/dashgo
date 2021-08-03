@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { Flex, SimpleGrid, Box, Text, theme } from '@chakra-ui/react'
 import { Header } from '../components/Header'
-import { SideBar } from '../components/SideBar'
+import { Sidebar } from '../components/Sidebar'
 import { ApexOptions } from 'apexcharts'
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false })
@@ -13,7 +13,7 @@ const options: ApexOptions = {
       show: false
     },
     zoom: {
-      enabled: false,
+      enabled: false
     },
     foreColor: theme.colors.gray[500]
   },
@@ -40,7 +40,7 @@ const options: ApexOptions = {
       '2021-07-24T00:00:00.000Z',
       '2021-07-26T00:00:00.000Z',
       '2021-07-28T00:00:00.000Z',
-      '2021-07-30T00:00:00.000Z',
+      '2021-07-30T00:00:00.000Z'
     ]
   },
   fill: {
@@ -50,29 +50,29 @@ const options: ApexOptions = {
     gradient: {
       shade: 'dark',
       opacityFrom: 0.7,
-      opacityTo: 0.3,
+      opacityTo: 0.3
     }
   }
 }
-const series = [
-  { name: 'series1', data: [100, 22, 34, 65, 1, 67] }
-]
-
-
+const series = [{ name: 'series1', data: [100, 22, 34, 65, 1, 67] }]
 
 export default function Dashboard(): JSX.Element {
   return (
     <Flex flexDir="column" h="100vh">
       <Header />
       <Flex w="100%" my="6" maxWidth={1480} mx="auto" px="6">
-        <SideBar />
+        <Sidebar />
         <SimpleGrid flex="1" gap="4" minChildWidth={320} align="flex-start">
           <Box p="8" bg="gray.800" borderRadius={8} pb="4">
-            <Text fontSize="lg" mb="4">Week subscribers</Text>
+            <Text fontSize="lg" mb="4">
+              Week subscribers
+            </Text>
             <Chart series={series} options={options} type="area" height={160} />
           </Box>
           <Box p="8" bg="gray.800" borderRadius={8} pb="4">
-            <Text fontSize="lg" mb="4">Opening rates</Text>
+            <Text fontSize="lg" mb="4">
+              Opening rates
+            </Text>
             <Chart series={series} options={options} type="area" height={160} />
           </Box>
         </SimpleGrid>
