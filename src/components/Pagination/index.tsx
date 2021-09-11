@@ -18,6 +18,26 @@ function generatePagesArray(from: number, to: number) {
     .filter((page) => page > 0)
 }
 
+type GetCurrentPageRecordsProps = {
+  page: number
+  registersPerPage?: number
+  totalCountOfRegisters: number
+}
+
+function getCurrentPageRecords({
+  page,
+  registersPerPage = 10,
+  totalCountOfRegisters
+}: GetCurrentPageRecordsProps) {
+  const firstPageRecord = page * registersPerPage - registersPerPage + 1
+  const lastRecordPerPage = page * registersPerPage
+  const lastPageRecord =
+    lastRecordPerPage > totalCountOfRegisters
+      ? totalCountOfRegisters
+      : lastRecordPerPage
+  return { firstPageRecord, lastPageRecord }
+}
+
 export function Pagination({
   totalCountOfRegisters,
   registersPerPage = 10,
@@ -35,6 +55,12 @@ export function Pagination({
 
   const nextPages =
     currentPage < lastPage ? generatePagesArray(currentPage, maxNextPage) : []
+
+  const { firstPageRecord, lastPageRecord } = getCurrentPageRecords({
+    page: currentPage,
+    registersPerPage,
+    totalCountOfRegisters
+  })
   return (
     <Stack
       direction={['column', 'row']}
@@ -44,8 +70,8 @@ export function Pagination({
       align="center"
     >
       <Box>
-        <strong>1</strong> - <strong>10</strong> de{' '}
-        <strong>{totalCountOfRegisters}</strong>
+        <strong>{firstPageRecord}</strong> - <strong>{lastPageRecord}</strong>{' '}
+        de <strong>{totalCountOfRegisters}</strong>
       </Box>
       <Stack direction="row" spacing="2">
         {currentPage > 1 + siblingsCount && (
